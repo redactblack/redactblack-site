@@ -43,11 +43,11 @@ const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d", { alpha:true });
 
 let particles = [];
-const COUNT = 90;
+const COUNT = window.innerWidth > 900 ? 160 : 90;
 
 // --- Desktop speed tuning ---
 const isDesktop = window.innerWidth > 900;
-const speedMultiplier = isDesktop ? 3.2 : 1;
+const speedMultiplier = isDesktop ? 2.1 : 1;
 
 // --- Volumetric logo halo ---
 const haloRadius = 320;
@@ -147,11 +147,13 @@ const delta = (time - lastTime) / 16.666; // normalize to 60fps
 lastTime = time;
 
 /* --- Cinematic particle trails --- */
-ctx.fillStyle = "rgba(0,0,0,0.08)";
+ctx.fillStyle = isDesktop
+  ? "rgba(0,0,0,0.05)"
+  : "rgba(0,0,0,0.08)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
-pulseTime += 0.008; // aura breathing speed
+pulseTime += 0.008 * delta; // aura breathing speed
 /* --- Cinematic camera drift --- */
-camTime += 0.004;
+camTime += 0.004 * delta;
 
 camX = Math.sin(camTime) * 10;
 camY = Math.cos(camTime * 0.8) * 6;
@@ -233,7 +235,7 @@ ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
 
 
 // subtle atmospheric depth blur
-ctx.filter = `blur(${(1 - p.depth) * 0.8}px)`;
+ctx.filter = isDesktop ? "none" : `blur(${(1 - p.depth) * 0.8}px)`;
 
 ctx.fill();
 
