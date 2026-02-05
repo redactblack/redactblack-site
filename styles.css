@@ -136,6 +136,10 @@ h2{margin:0; font-size:22px}
   transition: transform .35s ease, filter .35s ease;
 }
 
+.appLogo.large{
+  height:72px;   /* roughly 200% visual size */
+}
+
 .pill{
   font-size:12px;
   color:var(--muted);
