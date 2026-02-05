@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,7 +20,6 @@
   </header>
 
   <main class="center hero">
-    <!-- Replace with your logo file (e.g., assets/logo.png or assets/logo.svg) -->
     <img class="logo" src="assets/logo-redactblack.png" alt="RedactBlack logo" />
 
     <p class="tagline">Focused software. Built with intention.</p>
@@ -58,11 +56,9 @@ const COUNT = 90;
 let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
 
 window.addEventListener("pointermove", e=>{
-  // particle tracking
   mouse.x = e.clientX;
   mouse.y = e.clientY;
 
-  // glow tracking
   const x = (e.clientX/window.innerWidth)*100+"%";
   const y = (e.clientY/window.innerHeight)*100+"%";
   document.documentElement.style.setProperty("--mx",x);
@@ -70,13 +66,14 @@ window.addEventListener("pointermove", e=>{
 }, { passive:true });
 
 function resize(){
-const dpr = window.devicePixelRatio || 1;
-canvas.width = window.innerWidth * dpr;
-canvas.height = window.innerHeight * dpr;
-canvas.style.width = window.innerWidth + "px";
-canvas.style.height = window.innerHeight + "px";
-ctx.setTransform(dpr,0,0,dpr,0,0);
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + "px";
+  canvas.style.height = window.innerHeight + "px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
 }
+
 function createParticles(){
   particles = [];
   for(let i=0;i<COUNT;i++){
@@ -136,142 +133,3 @@ animate();
 </script>
 </body>
 </html>
-=======
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RedactBlack</title>
-  <meta name="description" content="RedactBlack — focused software." />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body class="intro">
-  <canvas id="particles"></canvas>	
-
-  <header class="nav">
-    <a class="brand" href="index.html" aria-label="RedactBlack Home">RedactBlack</a>
-    <nav class="links">
-      <a href="apps.html">Apps</a>
-      <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy</a>
-    </nav>
-  </header>
-
-  <main class="center hero">
-    <!-- Replace with your logo file (e.g., assets/logo.png or assets/logo.svg) -->
-    <img class="logo" src="assets/logo-redactblack.png" alt="RedactBlack logo" />
-
-    <p class="tagline">Focused software. Built with intention.</p>
-
-    <div class="ctaRow">
-      <a class="button" href="apps.html">View Apps</a>
-      <a class="button ghost" href="contact.html">Contact</a>
-    </div>
-
-    <p class="micro">
-      © <span id="year"></span> RedactBlack
-    </p>
-  </main>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-
-  <script>
-window.addEventListener("scroll",()=>{
-  const scrollY = window.scrollY || window.pageYOffset;
-  const offset = 50 + scrollY * 0.02;
-  document.documentElement.style.setProperty("--my", offset + "%");
-});
-  </script>
-
-  <script>
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d", { alpha:true });
-
-let particles = [];
-const COUNT = 90;
-
-let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
-
-window.addEventListener("pointermove", e=>{
-  // particle tracking
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-
-  // glow tracking
-  const x = (e.clientX/window.innerWidth)*100+"%";
-  const y = (e.clientY/window.innerHeight)*100+"%";
-  document.documentElement.style.setProperty("--mx",x);
-  document.documentElement.style.setProperty("--my",y);
-}, { passive:true });
-
-function resize(){
-const dpr = window.devicePixelRatio || 1;
-canvas.width = window.innerWidth * dpr;
-canvas.height = window.innerHeight * dpr;
-canvas.style.width = window.innerWidth + "px";
-canvas.style.height = window.innerHeight + "px";
-ctx.setTransform(dpr,0,0,dpr,0,0);
-}
-function createParticles(){
-  particles = [];
-  for(let i=0;i<COUNT;i++){
-    const depth = Math.random();
-    particles.push({
-      x: Math.random()*window.innerWidth,
-      y: Math.random()*window.innerHeight,
-      depth,
-      r: 0.3 + depth*1.8,
-      vx: (Math.random()-0.5)*(0.1 + depth*0.25),
-      vy: (Math.random()-0.5)*(0.1 + depth*0.25),
-      a: 0.15 + depth*0.6
-    });
-  }
-}
-
-window.addEventListener("resize", ()=>{
-  resize();
-  createParticles();
-});
-
-resize();
-createParticles();
-
-let running = true;
-
-document.addEventListener("visibilitychange",()=>{
-  running = !document.hidden;
-  if(running) animate();
-});
-
-function animate(){
-  if(!running) return;
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  for(const p of particles){
-
-    const dx = (mouse.x - window.innerWidth/2) * (0.00001 + p.depth*0.00004);
-    const dy = (mouse.y - window.innerHeight/2) * (0.00001 + p.depth*0.00004);
-
-    p.x += p.vx + dx;
-    p.y += p.vy + dy;
-
-    if(p.x<0||p.x>canvas.width) p.vx*=-1;
-    if(p.y<0||p.y>canvas.height) p.vy*=-1;
-
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle = "rgba(255,255,255,"+p.a+")";
-    ctx.fill();
-  }
-
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
-</body>
-</html>
->>>>>>> d892978cee6f80d6e2da9249a51eb199f584dce6
