@@ -198,47 +198,47 @@ body::before{
 
 /* --- Cinematic idle shimmer --- */
 
-.logoWrap::after{
-  content:"";
-  position:absolute;
-  inset:-20%;
-  pointer-events:none;
-
-  background:
-  linear-gradient(
-    110deg,
-    transparent 35%,
-    rgba(255,255,255,0.06) 48%,
-    rgba(255,255,255,0.10) 50%,
-    rgba(255,255,255,0.06) 52%,
-    transparent 65%
-  );
-
-  mix-blend-mode: screen;
-  filter: blur(18px);
-
-  transform: translateX(-120%) rotate(6deg);
-  animation: logoShimmer 28s linear infinite;
-  opacity:.6;
-}
-
+/* --- Depth shadow (under logo) --- */
 .logoWrap::before{
   content:"";
   position:absolute;
   inset:0;
   pointer-events:none;
-  z-index:-1;
+  z-index:-2;
 
-  /* cinematic depth shadow */
   background:
     radial-gradient(
-      60% 40% at calc(50% - var(--lx,0px)*1.4) calc(65% - var(--ly,0px)*1.2),
+      60% 40% at calc(50% - var(--lx,0px)*1.4)
+      calc(65% - var(--ly,0px)*1.2),
       rgba(0,0,0,0.45),
       transparent 70%
     );
 
   filter: blur(50px);
   opacity:.55;
+}
+
+/* --- Cinematic lens bloom lighting --- */
+.logoWrap::after{
+  content:"";
+  position:absolute;
+  inset:-35%;
+  pointer-events:none;
+  z-index:-1;
+
+  background:
+    radial-gradient(
+      380px 220px at
+      calc(50% + var(--lx,0px)*2)
+      calc(42% + var(--ly,0px)*1.6),
+      rgba(255,255,255,0.18),
+      rgba(120,160,255,0.12) 35%,
+      transparent 70%
+    );
+
+  filter: blur(50px);
+  opacity:.55;
+  mix-blend-mode: screen;
 }
 
 @keyframes glowPulse{
