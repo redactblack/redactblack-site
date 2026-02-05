@@ -142,7 +142,11 @@ document.addEventListener("visibilitychange",()=>{
 function animate(time){
   if(!running) return;
 
-const delta = (time - lastTime) / 16.666; // normalize to 60fps
+let delta = (time - lastTime) / 16.666;
+lastTime = time;
+
+// 🔥 clamp runaway frame jumps (desktop smoothing)
+delta = Math.min(delta, 1.2); // normalize to 60fps
 lastTime = time;
 
 /* --- Cinematic particle trails --- */
@@ -152,8 +156,8 @@ pulseTime += 0.008 * delta; // aura breathing speed
 /* --- Cinematic camera drift --- */
 camTime += 0.004 * delta;
 
-camX = Math.sin(camTime) * 10;
-camY = Math.cos(camTime * 0.8) * 6;
+camX = Math.sin(camTime) * 4;
+camY = Math.cos(camTime * 0.8) * 2.5;
   updateLogoCenter();
 
   /* --- Cinematic particle connections --- */
@@ -197,8 +201,8 @@ const dy = (mouse.y - window.innerHeight/2) * perspective;
     p.x += (p.vx + dx) * delta;
     p.y += (p.vy + dy) * delta;
 
-    if(p.x<0||p.x>canvas.width) p.vx*=-1;
-    if(p.y<0||p.y>canvas.height) p.vy*=-1;
+    if(p.x<0||p.x>window.innerWidth) p.vx*=-1;
+    if(p.y<0||p.y>window.innerHeight) p.vy*=-1;
 
     /* --- Cinematic depth lighting --- */
 const dxLogo = p.x - logoCenter.x;
