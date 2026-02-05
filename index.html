@@ -129,8 +129,6 @@ window.addEventListener("resize", ()=>{
   createParticles();
 });
 
-resize();
-createParticles();
 
 let running = true;
 
@@ -249,7 +247,12 @@ ctx.filter = "none";
   requestAnimationFrame(animate);
 }
 
-requestAnimationFrame(animate);
+// ✅ START PARTICLES ONLY AFTER PAGE LOADS
+window.addEventListener("load", () => {
+  resize();
+  createParticles();
+  requestAnimationFrame(animate);
+});
 
 </script>
 
@@ -258,7 +261,7 @@ requestAnimationFrame(animate);
 </footer>
 
 <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
