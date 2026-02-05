@@ -108,6 +108,15 @@ h2{margin:0; font-size:22px}
   transition: transform .35s ease, box-shadow .35s ease;
 }
 
+/* Privacy page cinematic alignment */
+.privacyCard{
+  text-align:center;
+}
+
+.privacyCard h2{
+  margin-bottom:12px;
+}
+
 /* =========================================
    FEATURED APP HERO (Studio Flagship Style)
 ========================================= */
