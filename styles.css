@@ -453,7 +453,7 @@ transparent 80%
 /* --- Desktop cinematic glow boost --- */
 @media (min-width:1200px){
   body::before{
-    filter: brightness(1.25) blur(8px);
+    filter: brightness(1.12) blur(1.5px);
   }
 }
 
