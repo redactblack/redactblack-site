@@ -20,18 +20,16 @@
   </header>
 
   <main class="center hero">
-    <img class="logo" src="assets/logo-redactblack.png" alt="RedactBlack logo" />
+    <div class="logoWrap">
+  <img class="logo" src="assets/logo-redactblack.png" alt="RedactBlack logo" />
+</div>
 
     <p class="tagline">Focused software. Built with intention.</p>
 
     
     
   </main>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-
+  
   <script>
 window.addEventListener("scroll",()=>{
   const scrollY = window.scrollY || window.pageYOffset;
@@ -46,6 +44,14 @@ const ctx = canvas.getContext("2d", { alpha:true });
 
 let particles = [];
 const COUNT = 90;
+
+// --- Volumetric logo halo ---
+const haloRadius = 320;
+let pulseTime = 0;
+let camTime = 0;
+let camX = 0;
+let camY = 0;
+const haloColor = { r:120, g:160, b:255 }; // cinematic blue
 
 let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
 
@@ -72,9 +78,10 @@ window.addEventListener("pointermove", e=>{
   const y = (e.clientY/window.innerHeight)*100+"%";
   document.documentElement.style.setProperty("--mx",x);
   document.documentElement.style.setProperty("--my",y);
+  
   /* --- Cinematic logo parallax --- */
-const px = (e.clientX / window.innerWidth - 0.5) * 12;
-const py = (e.clientY / window.innerHeight - 0.5) * 8;
+  const px = (e.clientX / window.innerWidth - 0.5) * 12;
+  const py = (e.clientY / window.innerHeight - 0.5) * 8;
 
 document.documentElement.style.setProperty("--lx", px + "px");
 document.documentElement.style.setProperty("--ly", py + "px");
@@ -94,14 +101,20 @@ function createParticles(){
   for(let i=0;i<COUNT;i++){
     const depth = Math.random();
     particles.push({
-      x: Math.random()*window.innerWidth,
-      y: Math.random()*window.innerHeight,
-      depth,
-      r: 0.3 + depth*1.8,
-      vx: (Math.random()-0.5)*(0.1 + depth*0.25),
-      vy: (Math.random()-0.5)*(0.1 + depth*0.25),
-      a: 0.15 + depth*0.6
-    });
+  x: Math.random()*window.innerWidth,
+  y: Math.random()*window.innerHeight,
+  depth,
+
+  // cinematic depth sizing
+  r: 0.4 + depth*2.4,
+
+  // layered velocity
+  vx: (Math.random()-0.5)*(0.05 + depth*0.35),
+  vy: (Math.random()-0.5)*(0.05 + depth*0.35),
+
+  // alpha based on depth
+  a: 0.10 + depth*0.7
+});
   }
 }
 
@@ -126,12 +139,52 @@ function animate(){
 /* --- Cinematic particle trails --- */
 ctx.fillStyle = "rgba(0,0,0,0.18)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
+pulseTime += 0.008; // aura breathing speed
+/* --- Cinematic camera drift --- */
+camTime += 0.004;
+
+camX = Math.sin(camTime) * 10;
+camY = Math.cos(camTime * 0.8) * 6;
   updateLogoCenter();
+
+  /* --- Cinematic particle connections --- */
+
+const maxDist = 140;   // connection distance
+ctx.lineWidth = 0.4;
+
+for(let i=0;i<particles.length;i++){
+  const p1 = particles[i];
+
+  for(let j=i+1;j<particles.length;j++){
+    const p2 = particles[j];
+
+    const dx = p1.x - p2.x;
+    const dy = p1.y - p2.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+
+    if(dist < maxDist){
+
+      // depth-aware opacity
+      const depthMix = (p1.depth + p2.depth) * 0.5;
+      const alpha = (1 - dist/maxDist) * 0.18 * depthMix;
+
+      ctx.beginPath();
+      ctx.moveTo(p1.x + camX, p1.y + camY);
+      ctx.lineTo(p2.x + camX, p2.y + camY);
+
+      ctx.strokeStyle = "rgba(120,160,255," + alpha + ")";
+      ctx.stroke();
+    }
+  }
+}
 
   for(const p of particles){
 
-    const dx = (mouse.x - window.innerWidth/2) * (0.00001 + p.depth*0.00004);
-    const dy = (mouse.y - window.innerHeight/2) * (0.00001 + p.depth*0.00004);
+    // cinematic perspective drift (depth layered)
+const perspective = 0.000006 + p.depth * 0.00005;
+
+const dx = (mouse.x - window.innerWidth/2) * perspective;
+const dy = (mouse.y - window.innerHeight/2) * perspective;
 
     p.x += p.vx + dx;
     p.y += p.vy + dy;
@@ -144,20 +197,39 @@ const dxLogo = p.x - logoCenter.x;
 const dyLogo = p.y - logoCenter.y;
 const dist = Math.sqrt(dxLogo*dxLogo + dyLogo*dyLogo);
 
-const glowRadius = 260; // how far logo light reaches
 let intensity = 0;
+let haloMix = 0;
 
-if(dist < glowRadius){
-  intensity = (1 - dist/glowRadius) * 0.65;
+// soft white glow (existing behavior)
+if(dist < 260){
+  intensity = (1 - dist/260) * 0.65;
+}
+
+// volumetric blue halo (new)
+if(dist < haloRadius){
+  const pulse = 0.75 + Math.sin(pulseTime) * 0.25;
+  haloMix = (1 - dist/haloRadius) * 0.35 * p.depth * pulse;
 }
 
 ctx.beginPath();
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.arc(p.x + camX, p.y + camY, p.r, 0, Math.PI*2);
 
-ctx.fillStyle =
-  "rgba(255,255,255," + (p.a + intensity) + ")";
+
+const r = 255 - haloMix * (255 - haloColor.r);
+const g = 255 - haloMix * (255 - haloColor.g);
+const b = 255 - haloMix * (255 - haloColor.b);
+const alpha = p.a + intensity + haloMix * 0.4;
+
+ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
+
+
+// subtle atmospheric depth blur
+ctx.filter = `blur(${(1 - p.depth) * 0.8}px)`;
 
 ctx.fill();
+
+ctx.filter = "none";
+
   }
 
   requestAnimationFrame(animate);
@@ -169,5 +241,8 @@ animate();
   © <span id="year"></span> RedactBlack
 </footer>
 
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

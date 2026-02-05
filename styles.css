@@ -171,17 +171,17 @@ body::before{
   max-height:55vh;
   height:auto;
   display:block;
-  mix-blend-mode: lighten;
+  mix-blend-mode: screen;
 
   transform-origin:center;
   will-change: transform, filter;
 
   /* Studio depth stack */
   filter:
-    contrast(1.15)
-    saturate(1.08)
-    drop-shadow(0 0 18px rgba(120,160,255,0.45))
-    drop-shadow(0 0 60px rgba(120,160,255,0.25));
+  contrast(1.18)
+  saturate(1.06)
+  drop-shadow(0 0 14px rgba(120,160,255,0.35))
+  drop-shadow(0 0 42px rgba(120,160,255,0.20));
 
   opacity:0;
   transform:
@@ -189,6 +189,56 @@ body::before{
   scale(0.95);
   animation: logoEnter 1.4s cubic-bezier(.2,.8,.2,1) forwards,
   logoPulse 8s ease-in-out infinite alternate;
+}
+
+.logoWrap{
+  position:relative;
+  display:inline-block;
+}
+
+/* --- Cinematic idle shimmer --- */
+
+.logoWrap::after{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  pointer-events:none;
+
+  background:
+  linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(255,255,255,0.06) 48%,
+    rgba(255,255,255,0.10) 50%,
+    rgba(255,255,255,0.06) 52%,
+    transparent 65%
+  );
+
+  mix-blend-mode: screen;
+  filter: blur(18px);
+
+  transform: translateX(-120%) rotate(6deg);
+  animation: logoShimmer 28s linear infinite;
+  opacity:.6;
+}
+
+.logoWrap::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+
+  /* cinematic depth shadow */
+  background:
+    radial-gradient(
+      60% 40% at calc(50% - var(--lx,0px)*1.4) calc(65% - var(--ly,0px)*1.2),
+      rgba(0,0,0,0.45),
+      transparent 70%
+    );
+
+  filter: blur(50px);
+  opacity:.55;
 }
 
 @keyframes glowPulse{
@@ -203,7 +253,9 @@ body::before{
 @keyframes logoEnter{
   to{
     opacity:1;
-    transform:scale(1);
+    transform:
+      translate(var(--lx), var(--ly))
+      scale(1);
   }
 }
 
@@ -229,6 +281,15 @@ body::before{
   to{
     opacity:1;
     transform: translateY(0);
+  }
+}
+
+@keyframes logoShimmer{
+  0%{
+    transform: translateX(-120%) rotate(6deg);
+  }
+  100%{
+    transform: translateX(120%) rotate(6deg);
   }
 }
 
@@ -259,8 +320,24 @@ body::before{
   position:absolute;
   inset:0;
   pointer-events:none;
+  z-index:-1;
+
   background:
-    radial-gradient(500px 260px at 50% 38%, rgba(255,255,255,0.08), transparent 70%);
+    radial-gradient(
+  420px 240px at calc(50% + var(--lx,0px)) calc(40% + var(--ly,0px)),
+  rgba(120,160,255,0.28),
+  rgba(120,160,255,0.14) 35%,
+  rgba(10,14,20,0.85) 70%,
+  transparent 85%
+),
+    radial-gradient(
+      700px 380px at 50% 40%,
+      rgba(120,160,255,0.10),
+      transparent 70%
+    );
+
+  filter: blur(22px);
+  opacity:.9;
 }
 
 .hero::before{
