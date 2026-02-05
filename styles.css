@@ -96,6 +96,20 @@ h2{margin:0; font-size:22px}
   border:1px solid var(--border);
   border-radius:16px;
   background: rgba(16,24,38,0.55);
+
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+}
+
+.card:hover .appLogo{
+  transform: scale(1.04);
+  filter:
+    drop-shadow(0 0 12px rgba(120,160,255,0.35));
+  transition: transform .35s ease, filter .35s ease;
 }
 
 .cardHeader{
@@ -103,6 +117,23 @@ h2{margin:0; font-size:22px}
   gap:10px;
   align-items:center;
   justify-content:space-between;
+}
+
+.appTitle{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.appLogo{
+  height:34px;
+  width:auto;
+  opacity:.95;
+
+  filter: drop-shadow(0 0 10px rgba(120,160,255,0.25));
+  mix-blend-mode: screen;
+
+  transition: transform .35s ease, filter .35s ease;
 }
 
 .pill{
