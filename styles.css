@@ -6,6 +6,8 @@
   --border:rgba(232,238,252,0.10);
   --btn:#e8eefc;
   --btnText:#0b0f14;
+  --lx: 0px;
+  --ly: 0px;
 }
 
 *{box-sizing:border-box}
@@ -165,10 +167,11 @@ body::before{
 
 /* Logo scaling — THIS makes it feel edge-to-edge */
 .logo{
-  width:min(85vw, 1500px);
-  max-height:48vh;
+  width:min(92vw, 1800px);
+  max-height:55vh;
   height:auto;
   display:block;
+  mix-blend-mode: lighten;
 
   transform-origin:center;
   will-change: transform, filter;
@@ -181,7 +184,9 @@ body::before{
     drop-shadow(0 0 60px rgba(120,160,255,0.25));
 
   opacity:0;
-  transform:scale(0.95);
+  transform:
+  translate(var(--lx), var(--ly))
+  scale(0.95);
   animation: logoEnter 1.4s cubic-bezier(.2,.8,.2,1) forwards,
   logoPulse 8s ease-in-out infinite alternate;
 }
@@ -258,18 +263,22 @@ body::before{
     radial-gradient(500px 260px at 50% 38%, rgba(255,255,255,0.08), transparent 70%);
 }
 
-.logo::after{
+.hero::before{
   content:"";
   position:absolute;
-  inset:-40px;
+  left:50%;
+  top:38%;
+  transform:translate(-50%,-50%);
+  width:min(90vw,1400px);
+  height:360px;
   pointer-events:none;
   z-index:-1;
 
   background:
-    radial-gradient(600px 260px at 50% 50%,
-      rgba(120,160,255,0.25),
+    radial-gradient(600px 260px at center,
+      rgba(120,160,255,0.28),
       transparent 70%);
 
-  filter:blur(40px);
-  opacity:.6;
+  filter:blur(60px);
+  opacity:.75;
 }

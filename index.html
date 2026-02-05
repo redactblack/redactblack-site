@@ -49,6 +49,21 @@ const COUNT = 90;
 
 let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
 
+/* --- Logo center tracking for depth lighting --- */
+let logoCenter = { x: window.innerWidth/2, y: window.innerHeight/2 };
+
+function updateLogoCenter(){
+  const logo = document.querySelector(".logo");
+  if(!logo) return;
+
+  const rect = logo.getBoundingClientRect();
+  logoCenter.x = rect.left + rect.width/2;
+  logoCenter.y = rect.top + rect.height/2;
+}
+
+updateLogoCenter();
+window.addEventListener("resize", updateLogoCenter);
+
 window.addEventListener("pointermove", e=>{
   mouse.x = e.clientX;
   mouse.y = e.clientY;
@@ -57,6 +72,12 @@ window.addEventListener("pointermove", e=>{
   const y = (e.clientY/window.innerHeight)*100+"%";
   document.documentElement.style.setProperty("--mx",x);
   document.documentElement.style.setProperty("--my",y);
+  /* --- Cinematic logo parallax --- */
+const px = (e.clientX / window.innerWidth - 0.5) * 12;
+const py = (e.clientY / window.innerHeight - 0.5) * 8;
+
+document.documentElement.style.setProperty("--lx", px + "px");
+document.documentElement.style.setProperty("--ly", py + "px");
 }, { passive:true });
 
 function resize(){
@@ -102,7 +123,10 @@ document.addEventListener("visibilitychange",()=>{
 function animate(){
   if(!running) return;
 
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+/* --- Cinematic particle trails --- */
+ctx.fillStyle = "rgba(0,0,0,0.18)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+  updateLogoCenter();
 
   for(const p of particles){
 
@@ -115,10 +139,25 @@ function animate(){
     if(p.x<0||p.x>canvas.width) p.vx*=-1;
     if(p.y<0||p.y>canvas.height) p.vy*=-1;
 
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle = "rgba(255,255,255,"+p.a+")";
-    ctx.fill();
+    /* --- Cinematic depth lighting --- */
+const dxLogo = p.x - logoCenter.x;
+const dyLogo = p.y - logoCenter.y;
+const dist = Math.sqrt(dxLogo*dxLogo + dyLogo*dyLogo);
+
+const glowRadius = 260; // how far logo light reaches
+let intensity = 0;
+
+if(dist < glowRadius){
+  intensity = (1 - dist/glowRadius) * 0.65;
+}
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
+ctx.fillStyle =
+  "rgba(255,255,255," + (p.a + intensity) + ")";
+
+ctx.fill();
   }
 
   requestAnimationFrame(animate);
