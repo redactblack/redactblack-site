@@ -48,6 +48,8 @@ const COUNT = 90;
 // --- Desktop speed tuning ---
 const speedMultiplier = 1;
 
+const speedScale = window.innerWidth / 430;
+
 // --- Volumetric logo halo ---
 const haloRadius = 320;
 const maxDist = 140;
@@ -198,8 +200,8 @@ const perspective = 0.000006 + p.depth * 0.00005;
 const dx = (mouse.x - window.innerWidth/2) * perspective;
 const dy = (mouse.y - window.innerHeight/2) * perspective;
 
-    p.x += (p.vx + dx) * delta;
-    p.y += (p.vy + dy) * delta;
+    p.x += (p.vx + dx) * delta * speedScale;
+    p.y += (p.vy + dy) * delta * speedScale;
 
     if(p.x<0||p.x>window.innerWidth) p.vx*=-1;
     if(p.y<0||p.y>window.innerHeight) p.vy*=-1;
