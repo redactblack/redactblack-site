@@ -108,6 +108,30 @@ h2{margin:0; font-size:22px}
   transition: transform .35s ease, box-shadow .35s ease;
 }
 
+/* =========================================
+   FEATURED APP HERO (Studio Flagship Style)
+========================================= */
+
+.featuredApp{
+  padding:40px 0 48px;
+  background:
+    radial-gradient(900px 500px at 50% 0%, rgba(120,160,255,0.12), transparent 70%),
+    rgba(16,24,38,0.45);
+  border:1px solid rgba(120,160,255,0.18);
+}
+
+.featuredApp .appLogo.large{
+  height:420px;
+}
+
+.featuredApp .cardHeader{
+  gap:18px;
+}
+
+.featuredApp .card p{
+  margin-top:18px;
+}
+
 .card p{
   text-align:center;
   max-width:700px;      /* keeps lines cinematic */
