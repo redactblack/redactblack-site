@@ -47,6 +47,7 @@ const COUNT = 90;
 
 // --- Volumetric logo halo ---
 const haloRadius = 320;
+const maxDist = 140;
 let pulseTime = 0;
 let camTime = 0;
 let camX = 0;
@@ -78,7 +79,7 @@ window.addEventListener("pointermove", e=>{
   const y = (e.clientY/window.innerHeight)*100+"%";
   document.documentElement.style.setProperty("--mx",x);
   document.documentElement.style.setProperty("--my",y);
-  
+
   /* --- Cinematic logo parallax --- */
   const px = (e.clientX / window.innerWidth - 0.5) * 12;
   const py = (e.clientY / window.innerHeight - 0.5) * 8;
@@ -137,7 +138,7 @@ function animate(){
   if(!running) return;
 
 /* --- Cinematic particle trails --- */
-ctx.fillStyle = "rgba(0,0,0,0.18)";
+ctx.fillStyle = "rgba(0,0,0,0.08)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 pulseTime += 0.008; // aura breathing speed
 /* --- Cinematic camera drift --- */
@@ -149,7 +150,6 @@ camY = Math.cos(camTime * 0.8) * 6;
 
   /* --- Cinematic particle connections --- */
 
-const maxDist = 140;   // connection distance
 ctx.lineWidth = 0.4;
 
 for(let i=0;i<particles.length;i++){
