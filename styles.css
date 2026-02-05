@@ -78,10 +78,12 @@ h1{margin:0 0 10px; font-size:40px}
 h2{margin:0; font-size:22px}
 
 .tagline{
-  margin:18px 0 22px;
+  margin:32px 0 18px;   /* pushes it lower under the logo */
   color:var(--muted);
   font-size:16px;
-  letter-spacing:0.3px;
+  letter-spacing:0.4px;
+  opacity:.75;          /* makes it feel like a subtle whisper */
+  max-width:520px;      /* keeps line length cinematic */
 }
 
 .subtle{color:var(--muted)}
