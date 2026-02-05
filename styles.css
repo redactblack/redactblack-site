@@ -170,8 +170,8 @@ body::before{
 
 /* Logo scaling — THIS makes it feel edge-to-edge */
 .logo{
-  width:min(96vw, 2100px);
-  max-height:62vh;
+  width:min(100vw, 2400px);
+  max-height:68vh;
   height:auto;
   display:block;
   mix-blend-mode: screen;
