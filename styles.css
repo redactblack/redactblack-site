@@ -78,12 +78,13 @@ h1{margin:0 0 10px; font-size:40px}
 h2{margin:0; font-size:22px}
 
 .tagline{
-  margin:32px 0 18px;   /* pushes it lower under the logo */
+  margin:26px 0 14px;     /* optical center tuning */
   color:var(--muted);
   font-size:16px;
   letter-spacing:0.4px;
-  opacity:.75;          /* makes it feel like a subtle whisper */
-  max-width:520px;      /* keeps line length cinematic */
+  opacity:.78;
+  max-width:520px;
+  line-height:1.55;       /* subtle cinematic breathing room */
 }
 
 .subtle{color:var(--muted)}
@@ -186,11 +187,9 @@ body::before{
   drop-shadow(0 0 42px rgba(120,160,255,0.20));
 
   opacity:0;
-  transform:
-  translate(var(--lx), var(--ly))
+  transform:  
   scale(0.95);
-  animation: logoEnter 1.4s cubic-bezier(.2,.8,.2,1) forwards,
-  logoPulse 8s ease-in-out infinite alternate;
+  animation: logoEnter 1.4s cubic-bezier(.2,.8,.2,1) forwards;
 }
 
 .logoWrap{
