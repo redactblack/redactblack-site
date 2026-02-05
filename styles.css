@@ -114,15 +114,17 @@ h2{margin:0; font-size:22px}
 
 .cardHeader{
   display:flex;
+  flex-direction:column;     /* ← STACK instead of left/right split */
+  align-items:center;        /* ← CENTER EVERYTHING */
+  justify-content:center;
   gap:10px;
-  align-items:center;
-  justify-content:space-between;
 }
 
 .appTitle{
   display:flex;
+  justify-content:center;
   align-items:center;
-  gap:14px;
+  width:100%;
 }
 
 .appLogo{
@@ -146,6 +148,7 @@ h2{margin:0; font-size:22px}
   border:1px solid var(--border);
   padding:6px 10px;
   border-radius:999px;
+  margin-top:6px;
 }
 
 .ctaRow{
