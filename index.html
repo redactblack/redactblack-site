@@ -45,6 +45,10 @@ const ctx = canvas.getContext("2d", { alpha:true });
 let particles = [];
 const COUNT = 90;
 
+// --- Desktop speed tuning ---
+const isDesktop = window.innerWidth > 900;
+const particleSpeed = isDesktop ? 1.8 : 1.0;
+
 // --- Volumetric logo halo ---
 const haloRadius = 320;
 const maxDist = 140;
@@ -110,8 +114,8 @@ function createParticles(){
   r: 0.4 + depth*2.4,
 
   // layered velocity
-  vx: (Math.random()-0.5)*(0.12 + depth*0.28),
-  vy: (Math.random()-0.5)*(0.12 + depth*0.28),
+  vx: (Math.random()-0.5)*(0.12 + depth*0.28) * particleSpeed,
+vy: (Math.random()-0.5)*(0.12 + depth*0.28) * particleSpeed,
 
   // alpha based on depth
   a: 0.10 + depth*0.7

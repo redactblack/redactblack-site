@@ -258,8 +258,8 @@ body::before{
 
 /* Logo scaling — THIS makes it feel edge-to-edge */
 .logo{
-  width:min(100vw, 2400px);
-  max-height:68vh;
+  width:min(85vw, 1600px);
+  max-height:60vh;
   height:auto;
   display:block;
   mix-blend-mode: normal;
@@ -448,4 +448,11 @@ transparent 80%
 
   filter:blur(60px);
   opacity:.75;
+}
+
+/* --- Desktop cinematic glow boost --- */
+@media (min-width:1200px){
+  body::before{
+    filter: brightness(1.25) blur(8px);
+  }
 }
