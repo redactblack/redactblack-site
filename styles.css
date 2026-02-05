@@ -324,7 +324,7 @@ body::before{
 
   background:
     radial-gradient(
-  420px 240px at calc(50% + var(--lx,0px)) calc(40% + var(--ly,0px)),
+  420px 240px at calc(50% + var(--lx,0px)) calc(52% + var(--ly,0px)),
   rgba(120,160,255,0.28),
   rgba(120,160,255,0.14) 35%,
   rgba(10,14,20,0.85) 70%,
