@@ -172,7 +172,6 @@ body::before{
 .logo{
   width:min(96vw, 2100px);
   max-height:62vh;
-}
   height:auto;
   display:block;
   mix-blend-mode: screen;
