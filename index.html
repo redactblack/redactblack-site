@@ -47,7 +47,7 @@ const COUNT = 90;
 
 // --- Desktop speed tuning ---
 const isDesktop = window.innerWidth > 900;
-const particleSpeed = isDesktop ? 1.8 : 1.0;
+const speedMultiplier = isDesktop ? 1.8 : 1;
 
 // --- Volumetric logo halo ---
 const haloRadius = 320;
@@ -114,8 +114,8 @@ function createParticles(){
   r: 0.4 + depth*2.4,
 
   // layered velocity
-  vx: (Math.random()-0.5)*(0.12 + depth*0.28) * particleSpeed,
-vy: (Math.random()-0.5)*(0.12 + depth*0.28) * particleSpeed,
+  vx: (Math.random()-0.5)*(0.12 + depth*0.28) * speedMultiplier,
+  vy: (Math.random()-0.5)*(0.12 + depth*0.28) * speedMultiplier,
 
   // alpha based on depth
   a: 0.10 + depth*0.7

@@ -464,3 +464,23 @@ transparent 80%
     width:92vw;
   }
 }
+
+/* --- Desktop cinematic sharpening --- */
+@media (min-width:1000px){
+
+  .hero::before{
+    filter: blur(35px);   /* was 60px */
+    opacity:.55;
+  }
+
+  .hero::after{
+    filter: blur(14px);   /* was 22px */
+  }
+
+}
+
+@media (min-width:1200px){
+  body::before{
+    filter: brightness(1.18) blur(4px);
+  }
+}
