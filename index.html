@@ -48,7 +48,7 @@ const COUNT = 90;
 // --- Desktop speed tuning ---
 const speedMultiplier = 1;
 
-const speedScale = window.innerWidth / 430;
+const speedScale = Math.min(window.innerWidth / 430, 1.6);
 
 // --- Volumetric logo halo ---
 const haloRadius = 320;
@@ -149,7 +149,7 @@ lastTime = time;
 
 // 🔥 clamp runaway frame jumps (desktop smoothing)
 delta = Math.min(delta, 1.2); // normalize to 60fps
-lastTime = time;
+
 
 /* --- Cinematic particle trails --- */
 ctx.fillStyle = "rgba(0,0,0,0.08)";
