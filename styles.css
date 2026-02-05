@@ -165,14 +165,19 @@ body::before{
 
 /* Logo scaling — THIS makes it feel edge-to-edge */
 .logo{
-  width:min(70vw, 1200px);
-  max-height:40vh;
+  width:min(82vw, 1400px);
+  max-height:60vh;
   height:auto;
   display:block;
+
   opacity:0;
   transform:scale(0.96);
   animation: logoEnter 1.2s ease-out forwards;
-  will-change: transform, opacity;
+
+  /* 🔥 cinematic presence */
+  filter:
+    drop-shadow(0 0 12px rgba(120,160,255,0.25))
+    drop-shadow(0 0 40px rgba(0,0,0,0.65));
 }
 
 @keyframes glowPulse{
@@ -189,6 +194,11 @@ body::before{
     opacity:1;
     transform:scale(1);
   }
+}
+
+.logo:hover{
+  transform:scale(1.015);
+  transition: transform .4s ease;
 }
 
 /* --- Cinematic nav entrance (index page only) --- */
