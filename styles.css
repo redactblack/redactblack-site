@@ -174,7 +174,7 @@ body::before{
   max-height:68vh;
   height:auto;
   display:block;
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
 
   transform-origin:center;
   will-change: transform, filter;
