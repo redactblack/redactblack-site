@@ -456,3 +456,11 @@ transparent 80%
     filter: brightness(1.25) blur(8px);
   }
 }
+
+/* --- Mobile Hero Logo Boost --- */
+@media (max-width:700px){
+  .logo{
+    max-height:84vh;
+    width:92vw;
+  }
+}
