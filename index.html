@@ -133,13 +133,18 @@ createParticles();
 
 let running = true;
 
+let lastTime = performance.now();
+
 document.addEventListener("visibilitychange",()=>{
   running = !document.hidden;
   if(running) animate();
 });
 
-function animate(){
+function animate(time){
   if(!running) return;
+
+const delta = (time - lastTime) / 16.666; // normalize to 60fps
+lastTime = time;
 
 /* --- Cinematic particle trails --- */
 ctx.fillStyle = "rgba(0,0,0,0.08)";
@@ -190,8 +195,8 @@ const perspective = 0.000006 + p.depth * 0.00005;
 const dx = (mouse.x - window.innerWidth/2) * perspective;
 const dy = (mouse.y - window.innerHeight/2) * perspective;
 
-    p.x += p.vx + dx;
-    p.y += p.vy + dy;
+    p.x += (p.vx + dx) * delta;
+    p.y += (p.vy + dy) * delta;
 
     if(p.x<0||p.x>canvas.width) p.vx*=-1;
     if(p.y<0||p.y>canvas.height) p.vy*=-1;
