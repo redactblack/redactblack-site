@@ -241,9 +241,14 @@ body::before{
   max-height:60vh;
   height:auto;
   display:block;
-  filter:none;
-  opacity:1;
-  transform:scale(1);
+
+  /* --- Ultra smooth GPU layer --- */
+  transform:translate3d(0,0,0) scale(1);
+  backface-visibility:hidden;
+  will-change:transform;
+
+  /* --- Motion polish --- */
+  transition:transform .28s cubic-bezier(.22,1,.36,1);
 }
 
 .logoWrap{
@@ -254,6 +259,7 @@ body::before{
 /* --- Cinematic idle shimmer --- */
 
 /* --- Depth shadow (under logo) --- */
+/*
 .logoWrap::before{
   display:none;
   content:"";
@@ -273,8 +279,10 @@ body::before{
   filter: blur(50px);
   opacity:.55;
 }
+  */
 
 /* --- Cinematic lens bloom lighting --- */
+/*
 .logoWrap::after{
   display:none;
   content:"";
@@ -297,6 +305,7 @@ body::before{
   opacity:.55;
   mix-blend-mode: screen;
 }
+*/
 
 @keyframes glowPulse{
   from{
@@ -321,8 +330,7 @@ body::before{
 }
 
 .logo:hover{
-  transform:scale(1.015);
-  transition: transform .4s ease;
+  transform:translate3d(0,-1px,0) scale(1.015);
 }
 
 /* --- Cinematic nav entrance (index page only) --- */
@@ -368,6 +376,8 @@ body::before{
   pointer-events:none; /* keeps clicks clean */
 }
 
+/*
+
 .hero::after{
   display:none;
   content:"";
@@ -394,6 +404,9 @@ transparent 80%
   opacity:.9;
 }
 
+*/
+
+/*
 .hero::before{
   display:none;
   content:"";
@@ -414,6 +427,7 @@ transparent 80%
   filter:blur(60px);
   opacity:.75;
 }
+*/  
 
 /* --- Desktop cinematic glow boost --- */
 @media (min-width:1200px){
@@ -430,17 +444,18 @@ transparent 80%
   }
 }
 
-/* --- Desktop cinematic sharpening --- */
+/*
 @media (min-width:1000px){
 
   .hero::before{
-    filter: blur(35px);   /* was 60px */
+    filter: blur(35px);
     opacity:.55;
   }
 
   .hero::after{
-    filter: blur(14px);   /* was 22px */
+    filter: blur(14px);
   }
 
 }
+*/
 
