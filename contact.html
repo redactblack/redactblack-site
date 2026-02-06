@@ -17,7 +17,7 @@
     </nav>
   </header>
 
-  <main class="container">
+  <main class="container" style="margin-top:60px;">
     <h1>Contact</h1>
     <p class="subtle">Email is the fastest way to reach us.</p>
 
@@ -25,9 +25,21 @@
     <div class="card">
       <p class="micro subtle">Email</p>
       <p class="email">
-        <a href="mailto:contact@redactblack.com">contact@redactblack.com</a>
+        <a href="mailto:contact@redactblack.com"
+   aria-label="Email RedactBlack at contact@redactblack.com">
+   contact@redactblack.com
+</a>
       </p>
     </div>
   </main>
+
+<footer class="siteFooter">
+  © <span id="year"></span> RedactBlack
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>

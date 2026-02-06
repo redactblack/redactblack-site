@@ -1,11 +1,11 @@
 :root{
-  --bg:#0b0f14;
-  --panel:#101826;
-  --text:#e8eefc;
-  --muted:#a7b4d0;
-  --border:rgba(232,238,252,0.10);
-  --btn:#e8eefc;
-  --btnText:#0b0f14;
+  --bg:#ffffff;
+  --panel:#ffffff;
+  --text:#111111;
+  --muted:#666666;
+  --border:rgba(0,0,0,0.08);
+  --btn:#111111;
+  --btnText:#ffffff;
   --lx: 0px;
   --ly: 0px;
 }
@@ -15,9 +15,7 @@ html,body{height:100%}
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  background: radial-gradient(1200px 800px at 50% -10%, rgba(120,160,255,0.18), transparent 60%),
-              radial-gradient(900px 600px at 90% 10%, rgba(255,255,255,0.06), transparent 55%),
-              var(--bg);
+  background: var(--bg);
   color:var(--text);
 }
 
@@ -102,7 +100,7 @@ h2{margin:0; font-size:22px}
   padding:18px 0;
   border:1px solid var(--border);
   border-radius:16px;
-  background: rgba(16,24,38,0.55);
+  background:#ffffff;
   overflow:hidden;
 
   transition: transform .35s ease, box-shadow .35s ease;
@@ -123,10 +121,8 @@ h2{margin:0; font-size:22px}
 
 .featuredApp{
   padding:40px 0 48px;
-  background:
-    radial-gradient(900px 500px at 50% 0%, rgba(120,160,255,0.12), transparent 70%),
-    rgba(16,24,38,0.45);
-  border:1px solid rgba(120,160,255,0.18);
+  background:#ffffff;
+  border:1px solid var(--border);
 }
 
 .featuredApp .appLogo.large{
@@ -151,7 +147,7 @@ h2{margin:0; font-size:22px}
 
 .card:hover{
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
 }
 
 .card:hover .appLogo{
@@ -179,12 +175,10 @@ h2{margin:0; font-size:22px}
 .appLogo{
   height:48px;
   width:auto;
-  opacity:.95;
-
-  filter: drop-shadow(0 0 10px rgba(120,160,255,0.25));
-  mix-blend-mode: screen;
-
-  transition: transform .35s ease, filter .35s ease;
+  opacity:1;
+  filter:none;
+  mix-blend-mode:normal;
+  transition: transform .35s ease;
 }
 
 .appLogo.large{
@@ -210,13 +204,8 @@ h2{margin:0; font-size:22px}
 }
 
 .button{
-  display:inline-block;
-  padding:11px 14px;
-  border-radius:12px;
-  background:var(--btn);
-  color:var(--btnText);
-  font-weight:700;
-  border:1px solid rgba(232,238,252,0.0);
+  background:#111;
+  color:#fff;
 }
 
 .button.ghost{
@@ -242,18 +231,8 @@ h2{margin:0; font-size:22px}
   align-items:center;
 }
 
-/* Cinematic glow background */
 body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-  background:
-  radial-gradient(1000px 600px at var(--mx,50%) var(--my,50%), rgba(120,160,255,0.28), transparent 70%),
-  radial-gradient(700px 350px at 50% 50%, rgba(255,255,255,0.08), transparent 60%),
-  #000;
-  animation: glowPulse 14s ease-in-out infinite alternate;   /* ← ADD THIS LINE */
+  display:none;
 }
 
 /* Logo scaling — THIS makes it feel edge-to-edge */
@@ -262,24 +241,9 @@ body::before{
   max-height:60vh;
   height:auto;
   display:block;
-  mix-blend-mode: normal;
-
-  transform-origin:center;
-  will-change: transform, filter;
-
-  /* Studio depth stack */
-  filter:
-  contrast(1.22)
-  saturate(1.05)
-  drop-shadow(0 1px 0 rgba(0,0,0,0.65))   /* depth edge */
-  drop-shadow(0 0 14px rgba(120,160,255,0.28))
-  drop-shadow(0 0 38px rgba(120,160,255,0.16));
-  
-
-  opacity:0;
-  transform:  
-  scale(0.95);
-  animation: logoEnter 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+  filter:none;
+  opacity:1;
+  transform:scale(1);
 }
 
 .logoWrap{
@@ -291,6 +255,7 @@ body::before{
 
 /* --- Depth shadow (under logo) --- */
 .logoWrap::before{
+  display:none;
   content:"";
   position:absolute;
   inset:0;
@@ -311,6 +276,7 @@ body::before{
 
 /* --- Cinematic lens bloom lighting --- */
 .logoWrap::after{
+  display:none;
   content:"";
   position:absolute;
   inset:-35%;
@@ -385,10 +351,7 @@ body::before{
 
 /* --- PARTICLE CANVAS LAYER FIX --- */
 #particles{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
+  display:none;
 }
 
 /* --- Cinematic bottom copyright --- */
@@ -406,6 +369,7 @@ body::before{
 }
 
 .hero::after{
+  display:none;
   content:"";
   position:absolute;
   inset:0;
@@ -431,6 +395,7 @@ transparent 80%
 }
 
 .hero::before{
+  display:none;
   content:"";
   position:absolute;
   left:50%;
