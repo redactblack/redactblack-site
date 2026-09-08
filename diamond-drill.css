@@ -63,7 +63,7 @@ h1 { margin: 0; max-width: 720px; font-size: clamp(54px, 6.5vw, 104px); line-hei
 .store-button span:last-child { display: flex; flex-direction: column; line-height: 1.05; }
 .store-button small { font-size: 10px; letter-spacing: .03em; }
 .store-button strong { margin-top: 3px; font-size: 19px; }
-.store-icon { font-size: 28px; line-height: 1; }
+.store-icon { flex: 0 0 auto; width: 29px; height: 29px; fill: #fff; }
 .play-mark { display: grid; place-items: center; width: 28px; height: 28px; color: #fff; background: linear-gradient(135deg,#25d366,#42a5f5 48%,#ffd23f 50%,#ef3d45); clip-path: polygon(0 0,100% 50%,0 100%); font-size: 0; }
 .trial-note { margin: 16px 0 0; color: var(--muted); font-size: 13px; }
 .trial-note strong { color: #fff; }
